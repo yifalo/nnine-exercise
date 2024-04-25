@@ -1,0 +1,15 @@
+div{
+    height: 300px;
+    width: 300px;
+}
+div:nth-child(1){
+    border-width: 10px;
+    border-style: solid dotted inset dashed;
+    border-color: blue red;
+    border-radius: 50%;
+}
+
+div:nth-child(2){
+    border: solid 3px black;
+    border-radius: 10px;
+}

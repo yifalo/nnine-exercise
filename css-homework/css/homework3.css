@@ -1,0 +1,29 @@
+div{
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+}
+
+div:nth-child(1){
+    background-color: lightblue;
+}
+
+div:nth-child(2){
+    background-image: url("/html-homework/images/logo.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+div:nth-child(3){
+    background-image: url("/html-homework/images/logo.png"),
+                    url("/html-homework/images/mountain.jpg");
+    background-size: 50% 100%,50% 100%;
+    background-repeat: no-repeat,no-repeat;
+    background-position: top left, 150px 0;
+
+}
+div:nth-child(4){
+    background-image: url("/html-homework/images/mountain.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed ;
+}
