@@ -15,7 +15,9 @@ class Player extends AcGameObject{
         this.gravity=50;
         this.vx=0;
         this.vy=0;
+
         this.direction=1;
+
         this.speedx=400; //水平速度
 
         this.speedy=-1000;//跳起速度
@@ -30,6 +32,18 @@ class Player extends AcGameObject{
 
     start(){
 
+    }
+
+    update_direction(){
+        let players=this.root.players;
+        if(players[0]&& players[1]){
+            let me=this,you=players[1-this.id];
+            if(me.x<you.x){
+                me.direction=1;
+            }else{
+                me.direction=-1;
+            }
+        }
     }
 
     update_control(){
@@ -51,6 +65,7 @@ class Player extends AcGameObject{
             if (space) {
                 this.status = 4;
                 this.vx = 0;
+                this.frame_current_cnt = 0;
             } else if (w) {
                 if (d) {
                     this.vx = this.speedx;
@@ -61,7 +76,7 @@ class Player extends AcGameObject{
                 }
                 this.vy = this.speedy;
                 this.status = 3;
-
+                this.frame_current_cnt = 0;
             } else if (d) {
                 this.vx = this.speedx;
                 this.status = 1;
@@ -96,7 +111,9 @@ class Player extends AcGameObject{
     update() {
         this.update_control();
         this.update_move();
+        this.update_direction();
         this.render();
+
     }
 
     render(){
@@ -109,10 +126,28 @@ class Player extends AcGameObject{
 
         let obj=this.animations.get(status);
         if(obj && obj.loaded){
-            let k = parseInt(this.frame_current_cnt / obj.frame_rate) % obj.frame_cnt;
-            let image= obj.gif.frames[k].image;
-            this.ctx.drawImage(image, this.x, this.y + obj.offset_y, image.width * obj.scale, image.height * obj.scale)
+            if(this.direction>0){
+                let k = parseInt(this.frame_current_cnt / obj.frame_rate) % obj.frame_cnt;
+                let image= obj.gif.frames[k].image;
+                this.ctx.drawImage(image, this.x, this.y + obj.offset_y, image.width * obj.scale, image.height * obj.scale)
+            }else{
+                this.ctx.save();//保存
 
+                this.ctx.scale(-1, 1);
+                this.ctx.translate(-this.root.GameMap.$canvas.width(), 0);
+
+                let k = parseInt(this.frame_current_cnt / obj.frame_rate) % obj.frame_cnt;
+                let image = obj.gif.frames[k].image;
+                this.ctx.drawImage(image, this.root.GameMap.$canvas.width() - this.x - this.width, this.y + obj.offset_y, image.width * obj.scale, image.height * obj.scale);
+
+                this.ctx.restore();
+            }
+
+
+        }
+        if(status===4 || status===3){
+            if( this.frame_current_cnt == obj.frame_rate * (obj.frame_cnt - 1))
+                this.status=0;
         }
 
         this.frame_current_cnt++;

@@ -8,7 +8,7 @@ class KOF{
 
         this.GameMap=new GameMap(this);
 
-        this.Kyo=[
+        this.players=[
             new Kyo(this,{
                 id:0,
                 x:200,
