@@ -16,7 +16,7 @@ export class Kyo extends Player{
         for(let i=0;i< 7;i++){
 
             let gif=new GIF();
-            gif.load(`/git-practice/kof/static/images/player/kyo/${i}.gif`);
+            gif.load(`../static/images/player/kyo/${i}.gif`);
             this.animations.set(i,{
                 gif:gif,
                 frame_cnt:0,//总图片数
