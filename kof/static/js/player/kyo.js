@@ -16,7 +16,7 @@ export class Kyo extends Player{
         for(let i=0;i< 7;i++){
 
             let gif=new GIF();
-            gif.load(`/git-practice/kof/static/images/player/kyo/${i}.gif`);
+            gif.load(`../static/images/player/kyo/${i}.gif`);//load 是网络请求资源，是根据index.html所在文件路径来判断
             this.animations.set(i,{
                 gif:gif,
                 frame_cnt:0,//总图片数
