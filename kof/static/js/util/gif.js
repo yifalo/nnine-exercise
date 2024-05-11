@@ -24,14 +24,18 @@ const GIF = function () {
         var len = this.data.length;
         this.getString = function (count) { // returns a string from current pos of len count
             var s = "";
-            while (count--) { s += String.fromCharCode(this.data[this.pos++]) }
+            while (count--) {
+                s += String.fromCharCode(this.data[this.pos++])
+            }
             return s;
         };
         this.readSubBlocks = function () { // reads a set of blocks as a string
             var size, count, data = "";
             do {
                 count = size = this.data[this.pos++];
-                while (count--) { data += String.fromCharCode(this.data[this.pos++]) }
+                while (count--) {
+                    data += String.fromCharCode(this.data[this.pos++])
+                }
             } while (size !== 0 && this.pos < len);
             return data;
         }
@@ -39,7 +43,9 @@ const GIF = function () {
             var size, count, data = [];
             do {
                 count = size = this.data[this.pos++];
-                while (count--) { data.push(this.data[this.pos++]); }
+                while (count--) {
+                    data.push(this.data[this.pos++]);
+                }
             } while (size !== 0 && this.pos < len);
             return data;
         }
@@ -60,31 +66,49 @@ const GIF = function () {
             last = code;
             code = 0;
             for (i = 0; i < size; i++) {
-                if (data[pos >> 3] & (1 << (pos & 7))) { code |= 1 << i }
+                if (data[pos >> 3] & (1 << (pos & 7))) {
+                    code |= 1 << i
+                }
                 pos++;
             }
             if (code === clear) { // clear and reset the dictionary
                 dic = [];
                 size = minSize + 1;
-                for (i = 0; i < clear; i++) { dic[i] = [i] }
+                for (i = 0; i < clear; i++) {
+                    dic[i] = [i]
+                }
                 dic[clear] = [];
                 dic[eod] = null;
             } else {
-                if (code === eod) { done = true; return }
-                if (code >= dic.length) { dic.push(dic[last].concat(dic[last][0])) }
-                else if (last !== clear) { dic.push(dic[last].concat(dic[code][0])) }
+                if (code === eod) {
+                    done = true;
+                    return
+                }
+                if (code >= dic.length) {
+                    dic.push(dic[last].concat(dic[last][0]))
+                } else if (last !== clear) {
+                    dic.push(dic[last].concat(dic[code][0]))
+                }
                 d = dic[code];
                 len = d.length;
-                for (i = 0; i < len; i++) { pixelBuf[pixelPos++] = d[i] }
-                if (dic.length === (1 << size) && size < 12) { size++ }
+                for (i = 0; i < len; i++) {
+                    pixelBuf[pixelPos++] = d[i]
+                }
+                if (dic.length === (1 << size) && size < 12) {
+                    size++
+                }
             }
         }
     };
+
     function parseColourTable(count) { // get a colour table of length count  Each entry is 3 bytes, for RGB.
         var colours = [];
-        for (var i = 0; i < count; i++) { colours.push([st.data[st.pos++], st.data[st.pos++], st.data[st.pos++]]) }
+        for (var i = 0; i < count; i++) {
+            colours.push([st.data[st.pos++], st.data[st.pos++], st.data[st.pos++]])
+        }
         return colours;
     }
+
     function parse() {        // read the header. This is the starting point of the decode and async calls parseBlock
         var bitField;
         st.pos += 6;
@@ -95,17 +119,23 @@ const GIF = function () {
         gif.globalColourCount = 1 << ((bitField & 0b111) + 1);
         gif.bgColourIndex = st.data[st.pos++];
         st.pos++;                    // ignoring pixel aspect ratio. if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
-        if (bitField & 0b10000000) { gif.globalColourTable = parseColourTable(gif.globalColourCount) } // global colour flag
+        if (bitField & 0b10000000) {
+            gif.globalColourTable = parseColourTable(gif.globalColourCount)
+        } // global colour flag
         setTimeout(parseBlock, 0);
     }
+
     function parseAppExt() { // get application specific data. Netscape added iterations and terminator. Ignoring that
         st.pos += 1;
-        if ('NETSCAPE' === st.getString(8)) { st.pos += 8 }  // ignoring this data. iterations (word) and terminator (byte)
+        if ('NETSCAPE' === st.getString(8)) {
+            st.pos += 8
+        }  // ignoring this data. iterations (word) and terminator (byte)
         else {
             st.pos += 3;            // 3 bytes of string usually "2.0" when identifier is NETSCAPE
             st.readSubBlocks();     // unknown app extension
         }
     };
+
     function parseGCExt() { // get GC data
         var bitField;
         st.pos++;
@@ -116,6 +146,7 @@ const GIF = function () {
         gif.transparencyIndex = st.data[st.pos++];
         st.pos++;
     };
+
     function parseImg() {                           // decodes image data to create the indexed pixel image
         var deinterlace, frame, bitField;
         deinterlace = function (width) {                   // de interlace pixel data if needed
@@ -139,15 +170,20 @@ const GIF = function () {
         frame.time = gif.length;
         frame.delay = gif.delayTime * 10;
         gif.length += frame.delay;
-        if (gif.transparencyGiven) { frame.transparencyIndex = gif.transparencyIndex }
-        else { frame.transparencyIndex = undefined }
+        if (gif.transparencyGiven) {
+            frame.transparencyIndex = gif.transparencyIndex
+        } else {
+            frame.transparencyIndex = undefined
+        }
         frame.leftPos = (st.data[st.pos++]) + ((st.data[st.pos++]) << 8);
         frame.topPos = (st.data[st.pos++]) + ((st.data[st.pos++]) << 8);
         frame.width = (st.data[st.pos++]) + ((st.data[st.pos++]) << 8);
         frame.height = (st.data[st.pos++]) + ((st.data[st.pos++]) << 8);
         bitField = st.data[st.pos++];
         frame.localColourTableFlag = bitField & 0b10000000 ? true : false;
-        if (frame.localColourTableFlag) { frame.localColourTable = parseColourTable(1 << ((bitField & 0b111) + 1)) }
+        if (frame.localColourTableFlag) {
+            frame.localColourTable = parseColourTable(1 << ((bitField & 0b111) + 1))
+        }
         if (pixelBufSize !== frame.width * frame.height) { // create a pixel buffer if not yet created or if current frame size is different from previous
             pixelBuf = new Uint8Array(frame.width * frame.height);
             pixelBufSize = frame.width * frame.height;
@@ -156,9 +192,12 @@ const GIF = function () {
         if (bitField & 0b1000000) {                        // de interlace if needed
             frame.interlaced = true;
             deinterlace(frame.width);
-        } else { frame.interlaced = false }
+        } else {
+            frame.interlaced = false
+        }
         processFrame(frame);                               // convert to canvas image
     };
+
     function processFrame(frame) { // creates a RGBA canvas image from the indexed pixel data.
         var ct, cData, dat, pixCount, ind, useT, i, pixel, pDat, col, frame, ti;
         frame.image = document.createElement('canvas');
@@ -166,14 +205,21 @@ const GIF = function () {
         frame.image.height = gif.height;
         frame.image.ctx = frame.image.getContext("2d");
         ct = frame.localColourTableFlag ? frame.localColourTable : gif.globalColourTable;
-        if (gif.lastFrame === null) { gif.lastFrame = frame }
+        if (gif.lastFrame === null) {
+            gif.lastFrame = frame
+        }
         useT = (gif.lastFrame.disposalMethod === 2 || gif.lastFrame.disposalMethod === 3) ? true : false;
-        if (!useT) { frame.image.ctx.drawImage(gif.lastFrame.image, 0, 0, gif.width, gif.height) }
+        if (!useT) {
+            frame.image.ctx.drawImage(gif.lastFrame.image, 0, 0, gif.width, gif.height)
+        }
         cData = frame.image.ctx.getImageData(frame.leftPos, frame.topPos, frame.width, frame.height);
         ti = frame.transparencyIndex;
         dat = cData.data;
-        if (frame.interlaced) { pDat = deinterlaceBuf }
-        else { pDat = pixelBuf }
+        if (frame.interlaced) {
+            pDat = deinterlaceBuf
+        } else {
+            pDat = pixelBuf
+        }
         pixCount = pDat.length;
         ind = 0;
         for (i = 0; i < pixCount; i++) {
@@ -184,16 +230,20 @@ const GIF = function () {
                 dat[ind++] = col[1];
                 dat[ind++] = col[2];
                 dat[ind++] = 255;      // Opaque.
-            } else
-            if (useT) {
+            } else if (useT) {
                 dat[ind + 3] = 0; // Transparent.
                 ind += 4;
-            } else { ind += 4 }
+            } else {
+                ind += 4
+            }
         }
         frame.image.ctx.putImageData(cData, frame.leftPos, frame.topPos);
         gif.lastFrame = frame;
-        if (!gif.waitTillDone && typeof gif.onload === "function") { doOnloadEvent() }// if !waitTillDone the call onload now after first frame is loaded
+        if (!gif.waitTillDone && typeof gif.onload === "function") {
+            doOnloadEvent()
+        }// if !waitTillDone the call onload now after first frame is loaded
     };
+
     // **NOT** for commercial use.
     function finnished() { // called when the load has completed
         gif.loading = false;
@@ -211,77 +261,119 @@ const GIF = function () {
         pixelBufSize = undefined;
         deinterlaceBuf = undefined;
         gif.currentFrame = 0;
-        if (gif.frames.length > 0) { gif.image = gif.frames[0].image }
+        if (gif.frames.length > 0) {
+            gif.image = gif.frames[0].image
+        }
         doOnloadEvent();
         if (typeof gif.onloadall === "function") {
-            (gif.onloadall.bind(gif))({ type: 'loadall', path: [gif] });
+            (gif.onloadall.bind(gif))({type: 'loadall', path: [gif]});
         }
-        if (gif.playOnLoad) { gif.play() }
+        if (gif.playOnLoad) {
+            gif.play()
+        }
     }
+
     function canceled() { // called if the load has been cancelled
         finnished();
-        if (typeof gif.cancelCallback === "function") { (gif.cancelCallback.bind(gif))({ type: 'canceled', path: [gif] }) }
+        if (typeof gif.cancelCallback === "function") {
+            (gif.cancelCallback.bind(gif))({type: 'canceled', path: [gif]})
+        }
     }
+
     function parseExt() {              // parse extended blocks
         const blockID = st.data[st.pos++];
-        if (blockID === GIF_FILE.GCExt) { parseGCExt() }
-        else if (blockID === GIF_FILE.COMMENT) { gif.comment += st.readSubBlocks() }
-        else if (blockID === GIF_FILE.APPExt) { parseAppExt() }
-        else {
-            if (blockID === GIF_FILE.UNKNOWN) { st.pos += 13; } // skip unknow block
+        if (blockID === GIF_FILE.GCExt) {
+            parseGCExt()
+        } else if (blockID === GIF_FILE.COMMENT) {
+            gif.comment += st.readSubBlocks()
+        } else if (blockID === GIF_FILE.APPExt) {
+            parseAppExt()
+        } else {
+            if (blockID === GIF_FILE.UNKNOWN) {
+                st.pos += 13;
+            } // skip unknow block
             st.readSubBlocks();
         }
 
     }
+
     function parseBlock() { // parsing the blocks
-        if (gif.cancel !== undefined && gif.cancel === true) { canceled(); return }
+        if (gif.cancel !== undefined && gif.cancel === true) {
+            canceled();
+            return
+        }
 
         const blockId = st.data[st.pos++];
         if (blockId === GIF_FILE.IMAGE) { // image block
             parseImg();
-            if (gif.firstFrameOnly) { finnished(); return }
-        } else if (blockId === GIF_FILE.EOF) { finnished(); return }
-        else { parseExt() }
+            if (gif.firstFrameOnly) {
+                finnished();
+                return
+            }
+        } else if (blockId === GIF_FILE.EOF) {
+            finnished();
+            return
+        } else {
+            parseExt()
+        }
         if (typeof gif.onprogress === "function") {
-            gif.onprogress({ bytesRead: st.pos, totalBytes: st.data.length, frame: gif.frames.length });
+            gif.onprogress({bytesRead: st.pos, totalBytes: st.data.length, frame: gif.frames.length});
         }
         setTimeout(parseBlock, 0); // parsing frame async so processes can get some time in.
     };
+
     function cancelLoad(callback) { // cancels the loading. This will cancel the load before the next frame is decoded
-        if (gif.complete) { return false }
+        if (gif.complete) {
+            return false
+        }
         gif.cancelCallback = callback;
         gif.cancel = true;
         return true;
     }
+
     function error(type) {
-        if (typeof gif.onerror === "function") { (gif.onerror.bind(this))({ type: type, path: [this] }) }
+        if (typeof gif.onerror === "function") {
+            (gif.onerror.bind(this))({type: type, path: [this]})
+        }
         gif.onload = gif.onerror = undefined;
         gif.loading = false;
     }
+
     function doOnloadEvent() { // fire onload event if set
         gif.currentFrame = 0;
         gif.nextFrameAt = gif.lastFrameAt = new Date().valueOf(); // just sets the time now
-        if (typeof gif.onload === "function") { (gif.onload.bind(gif))({ type: 'load', path: [gif] }) }
+        if (typeof gif.onload === "function") {
+            (gif.onload.bind(gif))({type: 'load', path: [gif]})
+        }
         gif.onerror = gif.onload = undefined;
     }
+
     function dataLoaded(data) { // Data loaded create stream and parse
         st = new Stream(data);
         parse();
     }
+
     function loadGif(filename) { // starts the load
         var ajax = new XMLHttpRequest();
         ajax.responseType = "arraybuffer";
         ajax.onload = function (e) {
-            if (e.target.status === 404) { error("File not found") }
-            else if (e.target.status >= 200 && e.target.status < 300) { dataLoaded(ajax.response) }
-            else { error("Loading error : " + e.target.status) }
+            if (e.target.status === 404) {
+                error("File not found")
+            } else if (e.target.status >= 200 && e.target.status < 300) {
+                dataLoaded(ajax.response)
+            } else {
+                error("Loading error : " + e.target.status)
+            }
         };
         ajax.open('GET', filename, true);
         ajax.send();
-        ajax.onerror = function (e) { error("File error") };
+        ajax.onerror = function (e) {
+            error("File error")
+        };
         this.src = filename;
         this.loading = true;
     }
+
     function play() { // starts play if paused
         if (!gif.playing) {
             gif.paused = false;
@@ -289,32 +381,50 @@ const GIF = function () {
             playing();
         }
     }
+
     function pause() { // stops play
         gif.paused = true;
         gif.playing = false;
         clearTimeout(timerID);
     }
+
     function togglePlay() {
-        if (gif.paused || !gif.playing) { gif.play() }
-        else { gif.pause() }
+        if (gif.paused || !gif.playing) {
+            gif.play()
+        } else {
+            gif.pause()
+        }
     }
+
     function seekFrame(frame) { // seeks to frame number.
         clearTimeout(timerID);
         gif.currentFrame = frame % gif.frames.length;
-        if (gif.playing) { playing() }
-        else { gif.image = gif.frames[gif.currentFrame].image }
+        if (gif.playing) {
+            playing()
+        } else {
+            gif.image = gif.frames[gif.currentFrame].image
+        }
     }
+
     function seek(time) { // time in Seconds  // seek to frame that would be displayed at time
         clearTimeout(timerID);
-        if (time < 0) { time = 0 }
+        if (time < 0) {
+            time = 0
+        }
         time *= 1000; // in ms
         time %= gif.length;
         var frame = 0;
-        while (time > gif.frames[frame].time + gif.frames[frame].delay && frame < gif.frames.length) { frame += 1 }
+        while (time > gif.frames[frame].time + gif.frames[frame].delay && frame < gif.frames.length) {
+            frame += 1
+        }
         gif.currentFrame = frame;
-        if (gif.playing) { playing() }
-        else { gif.image = gif.frames[gif.currentFrame].image }
+        if (gif.playing) {
+            playing()
+        } else {
+            gif.image = gif.frames[gif.currentFrame].image
+        }
     }
+
     function playing() {
         var delay;
         var frame;
@@ -324,10 +434,14 @@ const GIF = function () {
         } else {
             if (gif.playSpeed < 0) {
                 gif.currentFrame -= 1;
-                if (gif.currentFrame < 0) { gif.currentFrame = gif.frames.length - 1 }
+                if (gif.currentFrame < 0) {
+                    gif.currentFrame = gif.frames.length - 1
+                }
                 frame = gif.currentFrame;
                 frame -= 1;
-                if (frame < 0) { frame = gif.frames.length - 1 }
+                if (frame < 0) {
+                    frame = gif.frames.length - 1
+                }
                 delay = -gif.frames[frame].delay * 1 / gif.playSpeed;
             } else {
                 gif.currentFrame += 1;
@@ -338,6 +452,7 @@ const GIF = function () {
             timerID = setTimeout(playing, delay);
         }
     }
+
     var gif = {                      // the gif image object
         onload: null,       // fire on load. Use waitTillDone = true to have load fire at end or false to fire on first frame
         onerror: null,       // fires on error

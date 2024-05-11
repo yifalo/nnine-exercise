@@ -1,29 +1,29 @@
-import {GameMap}  from "./game_map/base.js"
+import {GameMap} from "./game_map/base.js"
 import {Kyo} from "./player/kyo.js"
 
-class KOF{
+class KOF {
     constructor(id) {
-        this.$kof=$('#'+id);
+        this.$kof = $('#' + id);
 
 
-        this.GameMap=new GameMap(this);
+        this.GameMap = new GameMap(this);
 
-        this.players=[
-            new Kyo(this,{
-                id:0,
-                x:200,
-                y:0,
-                width:120,
-                height:200,
-                color:'blue'
+        this.players = [
+            new Kyo(this, {
+                id: 0,
+                x: 200,
+                y: 0,
+                width: 120,
+                height: 200,
+                color: 'blue'
             }),
-            new Kyo(this,{
-                id:1,
-                x:900,
-                y:0,
-                width:120,
-                height:200,
-                color:'red'
+            new Kyo(this, {
+                id: 1,
+                x: 900,
+                y: 0,
+                width: 120,
+                height: 200,
+                color: 'red'
             })
 
         ];

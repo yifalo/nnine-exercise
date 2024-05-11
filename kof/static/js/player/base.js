@@ -1,96 +1,97 @@
-import  {AcGameObject} from "../ac_game_object/base.js";
+import {AcGameObject} from "../ac_game_object/base.js";
 
-class Player extends AcGameObject{
-    constructor(root,info) {
+class Player extends AcGameObject {
+    constructor(root, info) {
         super();
-        this.root=root;
-        this.id=info.id;//区分两个角色
-        this.x=info.x;
-        this.y=info.y;
-        this.width=info.width;
-        this.height=info.height;
-        this.color=info.color;
-        this.ctx=this.root.GameMap.ctx;
+        this.root = root;
+        this.id = info.id;//区分两个角色
+        this.x = info.x;
+        this.y = info.y;
+        this.width = info.width;
+        this.height = info.height;
+        this.color = info.color;
+        this.ctx = this.root.GameMap.ctx;
 
-        this.gravity=50;
-        this.vx=0;
-        this.vy=0;
+        this.gravity = 50;
+        this.vx = 0;
+        this.vy = 0;
 
-        this.direction=1;
+        this.direction = 1;
 
-        this.speedx=400; //水平速度
+        this.speedx = 400; //水平速度
 
-        this.speedy=-1000;//跳起速度
+        this.speedy = -1000;//跳起速度
 
-        this.status=3; //0 表是初始，1表示向前，2 向后，3 跳跃 4攻击 5被打 6死亡
-        this.press_key=this.root.GameMap.controller.press_key;
+        this.status = 3; //0 表是初始，1表示向前，2 向后，3 跳跃 4攻击 5被打 6死亡
+        this.press_key = this.root.GameMap.controller.press_key;
 
-        this.animations=new Map();
+        this.animations = new Map();
 
         this.frame_current_cnt = 0;
-        this.hp=100;
-        this.$hp=this.root.$kof.find(`.kof-head-hp-${this.id}>div`);
+        this.hp = 100;
+        this.$hp = this.root.$kof.find(`.kof-head-hp-${this.id}>div`);
         this.$hp_div = this.$hp.find('div');
     }
 
-    start(){
+    start() {
 
     }
 
-    update_direction(){
-        if(this.status===6)
+    update_direction() {
+        if (this.status === 6)
             return;
-        let players=this.root.players;
-        if(players[0]&& players[1]){
-            let me=this,you=players[1-this.id];
-            if(me.x<you.x){
-                me.direction=1;
-            }else{
-                me.direction=-1;
+        let players = this.root.players;
+        if (players[0] && players[1]) {
+            let me = this, you = players[1 - this.id];
+            if (me.x < you.x) {
+                me.direction = 1;
+            } else {
+                me.direction = -1;
             }
         }
     }
-    is_collision(r1, r2){
-        if(Math.max(r1.x1, r2.x1) > Math.min(r1.x2, r2.x2)){
+
+    is_collision(r1, r2) {
+        if (Math.max(r1.x1, r2.x1) > Math.min(r1.x2, r2.x2)) {
             return false;
         }
-        if(Math.max(r1.y1,r2.y1)>Math.min(r1.y2,r2.y2)){
+        if (Math.max(r1.y1, r2.y1) > Math.min(r1.y2, r2.y2)) {
             return false;
         }
         return true;
     }
 
-    is_attack(){
-        if(this.status===6)
+    is_attack() {
+        if (this.status === 6)
             return;
-        this.status=5;
-        this.frame_current_cnt=0;
-        this.hp=Math.max(this.hp-20,0);
+        this.status = 5;
+        this.frame_current_cnt = 0;
+        this.hp = Math.max(this.hp - 20, 0);
         this.$hp_div.animate({
             width: this.$hp.parent().width() * this.hp / 100
         }, 300);
         this.$hp.animate({
             width: this.$hp.parent().width() * this.hp / 100
         }, 600);
-        if(this.hp<=0){
-            this.status=6;
+        if (this.hp <= 0) {
+            this.status = 6;
             this.frame_current_cnt = 0;
             this.vx = 0;
         }
     }
 
-    update_attack(){
-        if(this.status===4 && this.frame_current_cnt===18){
-            let me=this,you=this.root.players[1-this.id];
+    update_attack() {
+        if (this.status === 4 && this.frame_current_cnt === 18) {
+            let me = this, you = this.root.players[1 - this.id];
             let r1;
-            if(this.direction>0){
+            if (this.direction > 0) {
                 r1 = {
                     x1: me.x + 120,
                     y1: me.y + 40,
                     x2: me.x + 120 + 100,
                     y2: me.y + 40 + 20,
                 };
-            }else{
+            } else {
                 r1 = {
                     x1: me.x + me.width - 120 - 100,
                     y1: me.y + 40,
@@ -112,22 +113,23 @@ class Player extends AcGameObject{
 
         }
     }
-    update_control(){
-         let w,a,d,space;
-         if(this.id===0){
-             w=this.press_key.has('w');
-             a=this.press_key.has('a');
-             d=this.press_key.has('d');
-             space=this.press_key.has(' ');
 
-         }else{
-             w=this.press_key.has('ArrowUp');
-             a=this.press_key.has('ArrowLeft');
-             d=this.press_key.has('ArrowRight');
-             space=this.press_key.has('Enter');
-         }
+    update_control() {
+        let w, a, d, space;
+        if (this.id === 0) {
+            w = this.press_key.has('w');
+            a = this.press_key.has('a');
+            d = this.press_key.has('d');
+            space = this.press_key.has(' ');
 
-        if(this.status===0 || this.status===1){
+        } else {
+            w = this.press_key.has('ArrowUp');
+            a = this.press_key.has('ArrowLeft');
+            d = this.press_key.has('ArrowRight');
+            space = this.press_key.has('Enter');
+        }
+
+        if (this.status === 0 || this.status === 1) {
             if (space) {
                 this.status = 4;
                 this.vx = 0;
@@ -156,25 +158,26 @@ class Player extends AcGameObject{
         }
     }
 
-    update_move(){
+    update_move() {
 
-        this.vy+=this.gravity;
+        this.vy += this.gravity;
 
-        this.x+=this.vx*this.timedelta /1000 ;
-        this.y+=this.vy*this.timedelta/1000;
-        if(this.y>450){
-            this.y=450;
-            this.vy=0;
-            if(this.status===3)
-                this.status=0;
+        this.x += this.vx * this.timedelta / 1000;
+        this.y += this.vy * this.timedelta / 1000;
+        if (this.y > 450) {
+            this.y = 450;
+            this.vy = 0;
+            if (this.status === 3)
+                this.status = 0;
         }
-        if(this.x<0){
-            this.x=0;
-        }else if(this.x+this.width>this.root.GameMap.$canvas.width()){
-            this.x=this.root.GameMap.$canvas.width()-this.width;
+        if (this.x < 0) {
+            this.x = 0;
+        } else if (this.x + this.width > this.root.GameMap.$canvas.width()) {
+            this.x = this.root.GameMap.$canvas.width() - this.width;
         }
 
     }
+
     update() {
         this.update_control();
         this.update_move();
@@ -184,7 +187,7 @@ class Player extends AcGameObject{
 
     }
 
-    render(){
+    render() {
         // this.ctx.fillStyle='blue';
         // this.ctx.fillRect(this.x,this.y,this.width,this.height);
         //
@@ -195,18 +198,18 @@ class Player extends AcGameObject{
         //     this.ctx.fillStyle='red';
         //     this.ctx.fillRect(this.x+this.width-220,this.y+40,20,20);
         // }
-        let status=this.status;
+        let status = this.status;
 
-        if(this.status===1 && this.vx * this.direction <0)//判断后退
-                status=2;
+        if (this.status === 1 && this.vx * this.direction < 0)//判断后退
+            status = 2;
 
-        let obj=this.animations.get(status);
-        if(obj && obj.loaded){
-            if(this.direction>0){
+        let obj = this.animations.get(status);
+        if (obj && obj.loaded) {
+            if (this.direction > 0) {
                 let k = parseInt(this.frame_current_cnt / obj.frame_rate) % obj.frame_cnt;
-                let image= obj.gif.frames[k].image;
+                let image = obj.gif.frames[k].image;
                 this.ctx.drawImage(image, this.x, this.y + obj.offset_y, image.width * obj.scale, image.height * obj.scale)
-            }else{
+            } else {
                 this.ctx.save();//保存
 
                 this.ctx.scale(-1, 1);
@@ -221,8 +224,8 @@ class Player extends AcGameObject{
 
 
         }
-        if(status===4 || status===5 || status===6){
-            if( this.frame_current_cnt == obj.frame_rate * (obj.frame_cnt - 1)) {
+        if (status === 4 || status === 5 || status === 6) {
+            if (this.frame_current_cnt == obj.frame_rate * (obj.frame_cnt - 1)) {
                 if (status === 6) {
                     this.frame_current_cnt--;
                 } else {
