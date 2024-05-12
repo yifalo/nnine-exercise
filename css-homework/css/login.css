@@ -1,0 +1,102 @@
+.header{
+    background-color: orange;
+    color: white;
+    width: 100%;
+    height: 50px ;
+
+}
+.header >span{
+    margin-left: 20px ;
+    line-height: 50px;
+}
+
+.link{
+    margin-left: 1400px ;
+    display: inline;
+}
+.link >a{
+    margin-left: 20px ;
+}
+
+
+.context{
+    border: 3px solid gray;
+
+
+    width: 499px;
+    height: 500px;
+    margin-left: 600px ;
+    margin-top: 100px;
+
+}
+.box-header{
+
+    width: 500px;
+    height:50px ;
+
+}
+.box-header-span1{
+    border: 1px solid black;
+    width: 244px;
+    display: block;
+    height: 50px;
+    float: left;
+    text-align: center;
+    padding-top: 10px;
+    background-color: lightblue;
+}
+
+.box-header-span2{
+    border: 2px solid black;
+    width: 250px;
+    display: block;
+    height: 50px;
+    float: left;
+    text-align: center;
+    padding-top: 10px;
+    background-color: white;
+}
+
+.box-context{
+    margin-top: 50px;
+    margin-left: 50px;
+}
+input{
+    width: 400px;
+    height: 25px;
+    margin-top: 10px;
+    border: 2px solid black;
+}
+.context-div1>div{
+    font-style: oblique;
+    font-weight: bold;
+}
+.context-div2{
+    margin-top: 50px;
+}
+.context-div2>div{
+    font-style: oblique;
+    font-weight: bold;
+}
+.context-div3-input{
+    width: 20px;
+    height: 20px;
+    margin-top: 50px;
+}
+.context-div3-span{
+    font-style: oblique;
+    font-weight: bold;
+}
+button{
+    background-color: lightgreen;
+    width: 400px;
+    margin-top: 40px;
+    height: 40px;
+}
+
+.context-div4{
+    margin-top: 20px;
+}
+.context-div4>span{
+    margin-left: 20px;
+}
