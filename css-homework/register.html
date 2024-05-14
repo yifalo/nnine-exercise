@@ -9,8 +9,8 @@
 <div class="header">
     <span>BootCamp -用户管理系统</span>
     <div class="link">
-        <a href="www.baidu.com">登录</a>
-        <a href="www.baidu.com">注册</a>
+        <a href="register.html">登录</a>
+        <a href="register.html">注册</a>
     </div>
 </div>
 
@@ -21,44 +21,50 @@
         <span class="box-header-span2">注册</span>
     </div>
 
-    <div class="box-context">
-        <div class="context-div1">
-            <div >用户名</div>
-            <input type="text" class="input">
+    <form action="register.html" class="box-context">
+        <div >
+            <label for="username">用户名</label>
+            <br>
+            <input type="text" name="username" id="username">
         </div>
 
-        <div class="context-div2">
-            <div >密码</div>
-            <input type="text" class="input">
+        <div >
+            <label for="password">密码</label>
+            <br>
+            <input type="text" id="password" name="password">
         </div>
 
-        <div class="context-div3">
-            <div >确认密码</div>
-            <input type="text" class="input">
+        <div >
+            <label for="checkPassword">确认密码</label>
+            <br>
+            <input type="text" id="checkPassword" name="password">
         </div>
 
-        <div class="context-div4">
-            <div >电子邮箱</div>
-            <input type="text" class="input">
+        <div >
+            <label for="email">邮箱</label>
+            <br>
+            <input type="text" id="email" name="email">
         </div>
 
-        <div class="context-div5">
-            <div >年龄</div>
-            <input type="text" class="input">
+        <div >
+            <label for="age">年龄</label>
+            <br>
+            <input type="text" id="age" name="age">
         </div>
 
-        <div class="context-div6">
-            <div>职业</div>
-
-            <input type="radio" name="radio">
-            <span>学生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <input type="radio" name="radio">
-            <span>上班族</span>
+        <div>
+            <label for="radioBtn1">职业</label>
+            <br>
+            <input type="radio" id="radioBtn1" name="radioGroup" style="margin-top: 25px ">
+            <label for="radioBtn1">学生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="radio" id="radioBtn2" name="radioGroup">
+            <label for="radioBtn2">上班族</label>
         </div>
 
         <button type="submit" >注册</button>
 
-    </div>
+
+    </form>
 
 </div>
 </body>
