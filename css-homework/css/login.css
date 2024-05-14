@@ -1,14 +1,16 @@
 body{
     height: 100%;
+    margin: 0;
 }
 html{
     height: 100%;
+    margin: 0;
 }
 .header{
     background-color: orange;
     color: white;
     width: 100%;
-    height: 7%;
+    padding: 10px 10px 10px 10px;
     font-family: "黑体", "SimHei", sans-serif;
 }
 .header >span{
@@ -35,14 +37,14 @@ html{
     margin-right: auto;
     margin-top: 100px;
     width: 30%;
-    height: 50%;
+
 
 }
 
 .box-header{
 
     width: 100%;
-    height:10% ;
+    height:50px;
     font-family: "黑体", "SimHei", sans-serif;
     display: flex;
 }
@@ -74,7 +76,7 @@ html{
 
 .box-context{
     width: 100%;
-    height: 90%;
+
 }
 
 *{
@@ -103,13 +105,13 @@ form{
 }
 form>div{
     height: 19%;
-    padding-bottom:25px;
+    padding-bottom:10px;
 
 }
 
 form>div:nth-child(n+1):nth-child(-n+2)>input{
     width: 100%;
-    height: 70%;
+    height: 30px;
     border: 1px solid black;
 }
 
@@ -120,7 +122,7 @@ input{
 .form-bt{
 
     width: 100%;
-    height: 80%;
+    height: 30px;
     background-color: green;
     color: white;
     font-family: "黑体", "SimHei", sans-serif;

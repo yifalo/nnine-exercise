@@ -2,7 +2,7 @@
     background-color: orange;
     color: white;
     width: 100%;
-    height: 7% ;
+    padding: 10px 10px 10px 10px;
     font-family: "黑体", "SimHei", sans-serif;
 }
 *{
@@ -14,9 +14,11 @@
 }
 html{
     height: 100%;
+    margin: 0;
 }
 body{
     height: 100%;
+    margin: 0;
 }
 .link{
     float: right;
@@ -36,17 +38,18 @@ body{
     margin-top: 50px;
 
     width: 30%;
-    height: 80%;
+
 
 }
 .box-header{
 
     width: 100%;
-    height:8% ;
+
     font-family: "黑体", "SimHei", sans-serif;
     display: flex;
 }
 .box-header-bt1{
+    padding: 20px 20px 20px 20px;
     border: 1px solid black;
     width: 50%;
     height: 100%;
@@ -60,6 +63,7 @@ body{
 }
 
 .box-header-bt2{
+    padding: 20px 20px 20px 20px;
     border: 1px solid black;
     width: 50%;
     height: 100%;
@@ -75,7 +79,7 @@ body{
 
 .box-context{
     width: 100%;
-    height: 92%;
+
     padding:20px 20px 20px 20px;
 }
 form>div:nth-child(n+1):nth-child(-n+5)>label{
@@ -92,7 +96,7 @@ form >div{
 }
 form>div:nth-child(n+1):nth-child(-n+5)>input{
     width: 100%;
-    height: 40%;
+    height: 30px;
     border: 1px solid black;
 }
 input{
@@ -106,6 +110,7 @@ input{
     color: white;
     font-family: "黑体", "SimHei", sans-serif;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px 10px 10px 10px;
 }
 
 .form-bt:hover{
