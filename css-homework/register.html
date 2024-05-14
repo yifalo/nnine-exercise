@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>register</title>
     <link rel="stylesheet" href="css/register.css" type="text/css">
+    <script src="https://cdn.acwing.com/static/jquery/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="header">
     <span>BootCamp -用户管理系统</span>
     <div class="link">
-        <a href="register.html">登录</a>
+        <a href="login.html">登录</a>
         <a href="register.html">注册</a>
     </div>
 </div>
@@ -17,52 +18,65 @@
 <div class="context">
 
     <div class="box-header">
-        <span class="box-header-span1">登录</span>
-        <span class="box-header-span2">注册</span>
+        <button class="box-header-bt1" id="box-header-bt1">
+            登录
+        </button>
+        <button class="box-header-bt2" id="box-header-bt2">
+            注册
+        </button>
     </div>
 
     <form action="register.html" class="box-context">
         <div >
             <label for="username">用户名</label>
             <br>
-            <input type="text" name="username" id="username">
+            <input type="text" name="username" id="username" placeholder="请输入ID,最多20位">
         </div>
 
         <div >
             <label for="password">密码</label>
             <br>
-            <input type="text" id="password" name="password">
+            <input type="password" id="password" name="password" placeholder="请输入你的密码">
         </div>
 
         <div >
             <label for="checkPassword">确认密码</label>
             <br>
-            <input type="text" id="checkPassword" name="password">
+            <input type="password" id="checkPassword" name="password" placeholder="请再次输入你的密码">
         </div>
 
         <div >
             <label for="email">邮箱</label>
             <br>
-            <input type="text" id="email" name="email">
+            <input type="email" id="email" name="email" placeholder="请输入你的电子邮箱">
         </div>
 
         <div >
             <label for="age">年龄</label>
             <br>
-            <input type="text" id="age" name="age">
+            <input id="age" name="age" type="number">
         </div>
 
         <div>
-            <label for="radioBtn1">职业</label>
+            <label >职业</label>
             <br>
             <input type="radio" id="radioBtn1" name="radioGroup" style="margin-top: 25px ">
-            <label for="radioBtn1">学生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input type="radio" id="radioBtn2" name="radioGroup">
+            <label for="radioBtn1">学生</label>
+            <input type="radio" id="radioBtn2" name="radioGroup" style="margin-left: 30px">
             <label for="radioBtn2">上班族</label>
         </div>
 
-        <button type="submit" >注册</button>
-
+        <button type="submit" class="form-bt">注册</button>
+        <script>
+            let $bt1=$('#box-header-bt1');
+            let $bt2=$('#box-header-bt2');
+            $bt1.on("click",function (){
+                location.href="login.html";
+            })
+            $bt2.on("click",function (){
+                location.href="register.html";
+            })
+        </script>
 
     </form>
 

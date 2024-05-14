@@ -9,7 +9,12 @@
     margin-left: 20px ;
     line-height: 50px;
 }
-
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+}
 .link{
     float: right;
     display: inline;
@@ -23,27 +28,25 @@
 .context{
     border: 2px solid gray;
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
 
     width: 500px;
-    height: 680px;
+    height: 650px;
 
 }
 .box-header{
 
-    width: 500px;
-    height:50px ;
+    width: 100%;
+    height:8% ;
     font-family: "黑体", "SimHei", sans-serif;
     display: flex;
 }
-.box-header-span1{
+.box-header-bt1{
     border: 1px solid black;
-    width: 245px;
-    height: 60px;
+    width: 50%;
+    height: 100%;
     background-color: white;
     display: flex;
     justify-content: center;
@@ -53,10 +56,11 @@
     box-shadow: inset 0 -10px 10px rgba(0, 0, 0, 0.1);
 }
 
-.box-header-span2{
+.box-header-bt2{
     border: 1px solid black;
-    width: 245px;
-    height: 60px;
+    width: 50%;
+    height: 100%;
+
     background-color: lightblue;
     display: flex;
     justify-content: center;
@@ -67,17 +71,17 @@
 }
 
 .box-context{
-    width: 450px;
-    height: 600px;
+    width: 90%;
+    height: 85%;
     margin-left: 45px;
-    margin-top: 50px;
+    padding-top: 30px;
 }
 form>div>label{
     font-family: "黑体", "SimHei", sans-serif;
 }
 
 form>div:nth-child(n+1):nth-child(-n+5)>input{
-    width: 398px;
+    width: 90%;
     height: 23px;
     margin-top: 10px;
     border: 1px solid black;
@@ -92,9 +96,9 @@ input{
 }
 
 
-button{
+.form-bt{
     margin-top: 35px;
-    width: 400px;
+    width: 90%;
     height: 35px;
     background-color: green;
     color: white;
@@ -102,8 +106,12 @@ button{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-button:hover{
+.form-bt:hover{
     transform: scale(1.1);
     cursor: pointer;
     background-color: orange;
+}
+.box-header>button:hover{
+    cursor: pointer;
+    background-color: blue;
 }

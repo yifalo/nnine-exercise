@@ -4,21 +4,26 @@
     <meta charset="UTF-8">
     <title>login</title>
     <link rel="stylesheet" href="css/login.css" type="text/css">
+    <script src="https://cdn.acwing.com/static/jquery/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="header">
     <span>BootCamp -用户管理系统</span>
     <div class="link">
         <a href="login.html">登录</a>
-        <a href="login.html">注册</a>
+        <a href="register.html">注册</a>
     </div>
 </div>
 
 <div class="context">
 
         <div class="box-header">
-            <span class="box-header-span1">登录</span>
-            <span class="box-header-span2">注册</span>
+            <button class="box-header-bt1" id="box-header-bt1">
+                登录
+            </button>
+            <button class="box-header-bt2" id="box-header-bt2">
+                注册
+            </button>
         </div>
 
        <form action="login.html" class="box-context">
@@ -40,7 +45,7 @@
                <label for="check">记住密码</label>
            </div>
 
-           <button type="submit" >登录</button>
+           <button type="submit" class="form-bt">登录</button>
 
            <div>
                <a href="login.html">找回密码</a>
@@ -50,7 +55,16 @@
        </form>
 
 
-
+    <script>
+        let $bt1=$('#box-header-bt1');
+        let $bt2=$('#box-header-bt2');
+        $bt1.on("click",function (){
+            location.href="login.html";
+        })
+        $bt2.on("click",function (){
+            location.href="register.html";
+        })
+    </script>
 
 </div>
 </body>
