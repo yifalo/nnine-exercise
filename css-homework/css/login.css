@@ -44,12 +44,12 @@ html{
 .box-header{
 
     width: 100%;
-    height:50px;
     font-family: "黑体", "SimHei", sans-serif;
     display: flex;
 }
 .box-header-bt1{
     border: 1px solid black;
+    padding: 20px 20px 20px 20px;
     width: 50%;
     height: 100%;
     background-color: lightblue;
@@ -63,6 +63,7 @@ html{
 
 .box-header-bt2{
     border: 1px solid black;
+    padding: 20px 20px 20px 20px;
     width: 50%;
     height: 100%;
     background-color: white;
