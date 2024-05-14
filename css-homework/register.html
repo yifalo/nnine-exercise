@@ -29,44 +29,47 @@
     <form action="register.html" class="box-context">
         <div >
             <label for="username">用户名</label>
-            <br>
+
             <input type="text" name="username" id="username" placeholder="请输入ID,最多20位">
         </div>
 
         <div >
             <label for="password">密码</label>
-            <br>
+
             <input type="password" id="password" name="password" placeholder="请输入你的密码">
         </div>
 
         <div >
             <label for="checkPassword">确认密码</label>
-            <br>
+
             <input type="password" id="checkPassword" name="password" placeholder="请再次输入你的密码">
         </div>
 
         <div >
             <label for="email">邮箱</label>
-            <br>
+
             <input type="email" id="email" name="email" placeholder="请输入你的电子邮箱">
         </div>
 
         <div >
             <label for="age">年龄</label>
-            <br>
+
             <input id="age" name="age" type="number">
         </div>
 
         <div>
-            <label >职业</label>
-            <br>
-            <input type="radio" id="radioBtn1" name="radioGroup" style="margin-top: 25px ">
+            <label style="display: block; margin-bottom: 10px">职业</label>
+
+            <input type="radio" id="radioBtn1" name="radioGroup" >
             <label for="radioBtn1">学生</label>
-            <input type="radio" id="radioBtn2" name="radioGroup" style="margin-left: 30px">
+            <input type="radio" id="radioBtn2" name="radioGroup" style="margin-left: 10px">
             <label for="radioBtn2">上班族</label>
         </div>
 
-        <button type="submit" class="form-bt">注册</button>
+        <div>
+            <button type="submit" class="form-bt">注册</button>
+        </div>
+
         <script>
             let $bt1=$('#box-header-bt1');
             let $bt2=$('#box-header-bt2');

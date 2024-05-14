@@ -5,6 +5,9 @@
     height: 50px ;
     font-family: "黑体", "SimHei", sans-serif;
 }
+*{
+    box-sizing: border-box;
+}
 .header >span{
     margin-left: 20px ;
     line-height: 50px;
@@ -33,7 +36,7 @@ body{
     margin-top: 50px;
 
     width: 500px;
-    height: 650px;
+    height: 700px;
 
 }
 .box-header{
@@ -71,34 +74,31 @@ body{
 }
 
 .box-context{
-    width: 90%;
-    height: 85%;
-    margin-left: 45px;
-    padding-top: 30px;
+    width: 100%;
+    height: 92%;
 }
-form>div>label{
+form>div:nth-child(n+1):nth-child(-n+5)>label{
+    font-family: "黑体", "SimHei", sans-serif;
+    display: block;
+    margin-bottom: 10px;
+}
+label{
     font-family: "黑体", "SimHei", sans-serif;
 }
-
+form>div{
+    padding:20px 20px 20px 20px;
+}
 form>div:nth-child(n+1):nth-child(-n+5)>input{
-    width: 90%;
-    height: 23px;
-    margin-top: 10px;
+    width: 100%;
+    height: 27px;
     border: 1px solid black;
 }
-form>div:nth-child(n+2){
-    margin-top: 20px;
-}
-
-
 input{
-    margin: 0px;
+    margin: 0;
 }
-
 
 .form-bt{
-    margin-top: 35px;
-    width: 90%;
+    width: 100%;
     height: 35px;
     background-color: green;
     color: white;

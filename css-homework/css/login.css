@@ -35,9 +35,10 @@ html{
     margin-right: auto;
     margin-top: 100px;
     width: 500px;
-    height: 470px;
+    height: 450px;
 
 }
+
 .box-header{
 
     width: 100%;
@@ -72,20 +73,45 @@ html{
 }
 
 .box-context{
-    width: 90%;
-    height: 80%;
-    margin-left: 45px;
-    padding-top: 30px;
+    width: 100%;
+    height: 90%;
 }
-
-form>div>label{
+*{
+    box-sizing: border-box;
+}
+form>div:nth-child(1)>label{
+    font-family: "黑体", "SimHei", sans-serif;
+    display: block;
+    margin-bottom: 10px;
+}
+form>div:nth-child(2)>label{
+    font-family: "黑体", "SimHei", sans-serif;
+    display: block;
+    margin-bottom: 10px;
+}
+label{
     font-family: "黑体", "SimHei", sans-serif;
 }
-
+form>div:nth-child(n+1):nth-child(-n+3){
+    padding-top: 20px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+form>div:nth-child(4){
+    padding-top: 20px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+form>div:nth-child(5){
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
 form>div:nth-child(n+1):nth-child(-n+2)>input{
-    width: 90%;
-    height: 23px;
-    margin-top: 10px;
+    width: 100%;
+    height: 27px;
     border: 1px solid black;
 }
 
@@ -93,8 +119,8 @@ input{
     margin: 0px;
 }
 .form-bt{
-    margin-top: 35px;
-    width: 90%;
+
+    width: 100%;
     height: 35px;
     background-color: green;
     color: white;
@@ -107,7 +133,7 @@ input{
     background-color: orange;
 }
 form>div:nth-child(5){
-    margin-top: 35px;
+
     font-family: "黑体", "SimHei", sans-serif;
 }
 
