@@ -52,7 +52,7 @@ body{
     padding: 20px 20px 20px 20px;
     border: 1px solid black;
     width: 50%;
-    height: 100%;
+
     background-color: white;
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@ body{
     padding: 20px 20px 20px 20px;
     border: 1px solid black;
     width: 50%;
-    height: 100%;
+
 
     background-color: lightblue;
     display: flex;
@@ -79,7 +79,8 @@ body{
 
 .box-context{
     width: 100%;
-
+    display: grid;
+    gap: 15px;
     padding:20px 20px 20px 20px;
 }
 form>div:nth-child(n+1):nth-child(-n+5)>label{
@@ -90,10 +91,7 @@ form>div:nth-child(n+1):nth-child(-n+5)>label{
 label{
     font-family: "黑体", "SimHei", sans-serif;
 }
-form >div{
-    padding-bottom: 10px;
-    height: 14%;
-}
+
 form>div:nth-child(n+1):nth-child(-n+5)>input{
     width: 100%;
     height: 30px;
@@ -105,7 +103,6 @@ input{
 
 .form-bt{
     width: 100%;
-    height: 50%;
     background-color: green;
     color: white;
     font-family: "黑体", "SimHei", sans-serif;

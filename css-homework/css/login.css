@@ -103,11 +103,8 @@ form{
     padding-right: 30px;
     padding-left: 30px;
     padding-bottom: 20px;
-}
-form>div{
-    height: 19%;
-    padding-bottom:10px;
-
+    display: grid;
+    gap: 20px;
 }
 
 form>div:nth-child(n+1):nth-child(-n+2)>input{
