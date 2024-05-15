@@ -8,80 +8,66 @@
 </head>
 <body>
 <div class="header">
-    <span>BootCamp -用户管理系统</span>
-    <div class="link">
-        <a href="login.html">登录</a>
+    <div class="title">BootCamp - 用户管理系统</div>
+    <div class="nav">
+        <a href="login.html">登陆</a>
         <a href="register.html">注册</a>
     </div>
 </div>
-
-<div class="context">
-
-    <div class="box-header">
-        <button class="box-header-bt1" id="box-header-bt1">
-            登录
-        </button>
-        <button class="box-header-bt2" id="box-header-bt2">
-            注册
-        </button>
+<div class="container">
+    <div class="tabs">
+        <div class="tab" id="login-tab">登陆</div>
+        <div class="tab active" id="register-tab">注册</div>
     </div>
-
-    <form action="register.html" class="box-context">
-        <div >
+    <form>
+        <div class="form-group">
             <label for="username">用户名</label>
-
-            <input type="text" name="username" id="username" placeholder="请输入ID,最多20位">
+            <input type="text" id="username" name="username">
         </div>
-
-        <div >
+        <div class="form-group">
             <label for="password">密码</label>
-
-            <input type="password" id="password" name="password" placeholder="请输入你的密码">
+            <input type="password" id="password" name="password">
         </div>
-
-        <div >
-            <label for="checkPassword">确认密码</label>
-
-            <input type="password" id="checkPassword" name="password" placeholder="请再次输入你的密码">
+        <div class="form-group">
+            <label for="confirm-password">确认密码</label>
+            <input type="password" id="confirm-password" name="confirm-password">
         </div>
-
-        <div >
-            <label for="email">邮箱</label>
-
-            <input type="email" id="email" name="email" placeholder="请输入你的电子邮箱">
+        <div class="form-group">
+            <label for="email">电子邮箱</label>
+            <input type="email" id="email" name="email">
         </div>
-
-        <div >
+        <div class="form-group">
             <label for="age">年龄</label>
-
-            <input id="age" name="age" type="number">
+            <input type="number" id="age" name="age">
         </div>
 
-        <div>
-            <label style="display: block; margin-bottom: 10px">职业</label>
+        <div class="form-group">
+            <label>职业</label>
+            <div class="radio-group">
+                <input type="radio" id="student" name="profession" value="student">
+                <label for="student">学生</label>
 
-            <input type="radio" id="radioBtn1" name="radioGroup" >
-            <label for="radioBtn1">学生</label>
-            <input type="radio" id="radioBtn2" name="radioGroup" style="margin-left: 10px">
-            <label for="radioBtn2">上班族</label>
+                <input type="radio" id="worker" name="profession" value="worker">
+                <label for="worker">上班族</label>
+            </div>
         </div>
-
-        <div>
-            <button type="submit" class="form-bt">注册</button>
-        </div>
+        <button type="submit" class="btn">注册</button>
+    </form>
+</div>
 
         <script>
-            let $bt1=$('#box-header-bt1');
-            let $bt2=$('#box-header-bt2');
+            let $bt1=$('#login-tab');
+            let $bt2=$('#register-tab');
             $bt1.on("click",function (){
                 location.href="login.html";
+
             })
             $bt2.on("click",function (){
                 location.href="register.html";
             })
         </script>
 
-    </form>
+
 
 </div>
 </body>
