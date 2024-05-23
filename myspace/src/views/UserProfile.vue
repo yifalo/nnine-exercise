@@ -1,18 +1,18 @@
-<template>
-  <ContentBase>首页</ContentBase>
-</template>
 
-<script>
+<template>
+  <content-base>
+    用户动态
+  </content-base>
+</template>
+<script >
 import ContentBase from "../components/ContentBase.vue";
 export default {
-  name: 'HomeView',
+  name: 'UserProfile',
   components: {
     ContentBase,
   }
 }
-
 </script>
 <style scoped>
-
 
 </style>
