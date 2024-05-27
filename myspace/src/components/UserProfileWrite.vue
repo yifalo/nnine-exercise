@@ -16,18 +16,38 @@
 
 <script >
 import {ref} from 'vue';
+import $ from 'jquery';
+import {useStore} from "vuex";
 export default {
   name:'UserProfilePostPost',
   setup(props,context){
     let content=ref('');
-
+    const store=new useStore();
     const post_a_post=()=>{
-      context.emit('post_a_post',content.value);
-      content.value="";
+      $.ajax({
+        url:'https://app165.acapp.acwing.com.cn/myspace/post/',
+        type:"POST",
+        data:{
+          content:content.value,
+        },
+        headers:{
+          'Authorization': 'Bearer ' + store.state.user.access,
+        },
+        success(resp){
+            if(resp.result==='success'){
+              context.emit('post_a_post',content.value);
+              content.value="";
+            }
+        }
+      })
+
     }
+
     return{
       content,
       post_a_post,
+
+
     }
   },
 

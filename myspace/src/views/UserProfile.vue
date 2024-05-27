@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-3">
           <UserProfileInfo v-on:follow="follow"  @unfollow="unfollow"  v-bind:user="user"/>
-          <UserProfileWrite v-on:post_a_post="post_a_post"></UserProfileWrite>
+          <UserProfileWrite v-if="is_me" v-on:post_a_post="post_a_post"></UserProfileWrite>
         </div>
         <div class="col-9">
-          <UserProfilePost  v-bind:posts="posts"> </UserProfilePost>
+          <UserProfilePost v-bind:user="user"  v-bind:posts="posts" @delete_post="delete_post" > </UserProfilePost>
         </div>
     </div>
   </content-base>
@@ -18,6 +18,10 @@ import UserProfileInfo from "../components/UserProfileInfo.vue";
 import UserProfilePost  from "../components/UserProfilePost.vue";
 import UserProfileWrite from "../components/UserProfileWrite.vue";
 import  {reactive} from "vue";
+import $ from 'jquery';
+import {useStore} from "vuex";
+import {useRoute} from "vue-router";
+import {computed} from "vue";
 
 export default {
   name: 'UserProfile',
@@ -28,38 +32,46 @@ export default {
     UserProfileWrite,
   },
   setup(){
+    const  route=new useRoute();
+    const  store =new useStore();
+    const userId=parseInt(route.params.userId);
 
+    const user=reactive({});
 
+    const posts=reactive({});
 
+    $.ajax({
+      url:'https://app165.acapp.acwing.com.cn/myspace/getinfo/',
+      type:'get',
+      data:{
+        user_id:userId,
+      },
+      headers:{
+        'Authorization': 'Bearer ' + store.state.user.access,
+      },
+      success(resp){
+        user.id=resp.id;
+        user.username=resp.username;
+        user.photo=resp.photo;
+        user.followerCount=resp.followerCount;
+        user.is_following=resp.is_followed;
 
-    const user=reactive({
-      id:1,
-      username:"N nine",
-      lastname:"yu",
-      firstname:"feihong",
-      followerCount:0,
-      is_following:false,
+      }
     });
 
-    const posts=reactive({
-      count:3,
-      posts:[
-        {
-          id:1,
-          userId:1,
-          content:"我是俞飞鸿"
-        },
-        {
-          id:2,
-          userId:1,
-          content:"我是俞飞鸿俞飞鸿"
-        },
-        {
-          id:3,
-          userId:1,
-          content:"我是俞飞鸿俞飞鸿俞飞鸿"
-        },
-      ]
+    $.ajax({
+      url:'https://app165.acapp.acwing.com.cn/myspace/post/',
+      type:'get',
+      data:{
+        user_id:userId,
+      },
+      headers:{
+        'Authorization': 'Bearer ' + store.state.user.access,
+      },
+      success(resp){
+        posts.count=resp.length;
+        posts.posts=resp;
+      }
     });
 
     const follow=()=>{
@@ -84,12 +96,21 @@ export default {
       })
     };
 
+    const delete_post=(postId)=>{
+      posts.posts = posts.posts.filter(post=>post.id !== postId);
+      posts.count=posts.posts.length;
+    }
+
+   const is_me=computed(()=>userId===store.state.user.id);
+
     return{
       posts,
       user,
       follow,
       unfollow,
       post_a_post,
+      is_me,
+      delete_post,
     }
   }
 }
