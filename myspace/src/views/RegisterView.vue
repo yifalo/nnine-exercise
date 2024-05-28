@@ -42,7 +42,7 @@ export default {
     let password = ref('');
     let errorMessage = ref('');
     let password_confirm = ref('');
-    console.log(store,router);
+
     const register = () => {
       errorMessage.value="";
       $.ajax({
@@ -54,7 +54,20 @@ export default {
           password_confirm:password_confirm.value,
         },
         success:(resp)=>{
-          console.log(resp);
+          if(resp.result==='success'){
+            store.dispatch("login",{
+              username: username.value,
+              password: password.value,
+              success(){
+                router.push({name: 'userlist',});
+              },
+              error(){
+                errorMessage.value="系统异常，请稍后重试";
+              }
+            });
+          }else{
+            errorMessage.value=resp.result;
+          }
         }
       })
     };
